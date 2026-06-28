@@ -6,7 +6,7 @@
   <title>Zeta Music Label</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@700;800&family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -54,32 +54,35 @@
 
   <main class="wrap">
 
-    <!-- NOW PLAYING (Drumcode-style) -->
-    <section class="listen">
-      <div class="listen-frame">
+    <!-- NOW PLAYING (modern card) -->
+    <section class="np">
+      <h2 class="np-heading">Hit play</h2>
 
-        <div class="listen-head">
-          <h2 class="listen-title">Hit play</h2>
+      <div class="np-card">
+        <div class="np-cover">
+          <img src="assets/album-cover.svg" alt="Album cover" />
         </div>
 
-        <div class="listen-main">
-          <div class="listen-cover">
-            <img src="assets/album-cover.svg" alt="Album cover" />
-          </div>
+        <div class="np-body">
+          <p class="np-eyebrow">Now playing</p>
+          <h3 class="np-title">Midnight Frequency</h3>
+          <p class="np-artist">Waleed DJ</p>
 
-          <div class="listen-song">
-            <p class="meta-label">Song</p>
-            <p class="song-name">Midnight Frequency</p>
-            <p class="song-artist">Waleed DJ</p>
+          <div class="np-controls">
+            <button class="np-play" id="play-btn" aria-label="Play or pause">
+              <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            </button>
+            <div class="np-progress">
+              <span class="np-time" id="time-current">0:00</span>
+              <div class="np-bar" id="progress-bar" role="slider" aria-label="Seek" tabindex="0">
+                <div class="np-fill" id="progress-fill"></div>
+                <div class="np-knob" id="progress-knob"></div>
+              </div>
+              <span class="np-time" id="time-duration">0:00</span>
+            </div>
           </div>
-
-          <button class="listen-play" id="play-btn" aria-label="Play or pause">
-            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-          </button>
         </div>
-
-        <div class="listen-wave" id="wave" role="slider" aria-label="Seek" tabindex="0"></div>
 
         <!-- Drop your file at audio/track.mp3 (or change the src below) -->
         <audio id="zeta-audio" src="audio/track.mp3" preload="metadata"></audio>

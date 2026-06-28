@@ -2,49 +2,36 @@
    ZETA MUSIC LABEL — scripts
    ============================================================ */
 
-/* ---------- Waveform audio player (HOME) ---------- */
+/* ---------- Modern audio player (HOME) ---------- */
 (function () {
   const audio = document.getElementById('zeta-audio');
   if (!audio) return;
 
   const playBtn = document.getElementById('play-btn');
-  const wave    = document.getElementById('wave');
+  const bar     = document.getElementById('progress-bar');
+  const fill    = document.getElementById('progress-fill');
+  const knob    = document.getElementById('progress-knob');
+  const curEl   = document.getElementById('time-current');
+  const durEl   = document.getElementById('time-duration');
 
-  /* Build a deterministic pseudo-waveform.
-     Swap this for real audio analysis later if you want exact bars. */
-  let bars = [];
-  function buildWave() {
-    wave.innerHTML = '';
-    bars = [];
-    const count = Math.max(40, Math.min(120, Math.floor(wave.clientWidth / 7)));
-    for (let i = 0; i < count; i++) {
-      const b = document.createElement('span');
-      b.className = 'bar';
-      // layered sines + a little jitter give a lively, music-like shape
-      const base =
-        0.5 +
-        0.32 * Math.sin(i * 0.45) +
-        0.18 * Math.sin(i * 1.7 + 1) +
-        0.12 * Math.sin(i * 0.13);
-      const jitter = ((Math.sin(i * 12.9898) * 43758.5453) % 1 + 1) % 1;
-      let h = Math.abs(base) * 0.7 + jitter * 0.3;
-      h = Math.max(0.12, Math.min(1, h));
-      b.style.height = (h * 100) + '%';
-      wave.appendChild(b);
-      bars.push(b);
-    }
-    paint();
-  }
+  const fmt = (s) => {
+    if (!isFinite(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${sec}`;
+  };
 
   function paint() {
     const frac = audio.duration ? audio.currentTime / audio.duration : 0;
-    const cut = Math.round(frac * bars.length);
-    bars.forEach((b, i) => b.classList.toggle('on', i < cut));
+    const pct = (frac * 100).toFixed(2) + '%';
+    fill.style.width = pct;
+    knob.style.left = pct;
+    curEl.textContent = fmt(audio.currentTime);
   }
 
   function seekFromX(clientX) {
     if (!audio.duration) return;
-    const rect = wave.getBoundingClientRect();
+    const rect = bar.getBoundingClientRect();
     const frac = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
     audio.currentTime = frac * audio.duration;
     paint();
@@ -57,11 +44,16 @@
 
   audio.addEventListener('play',  () => playBtn.classList.add('playing'));
   audio.addEventListener('pause', () => playBtn.classList.remove('playing'));
+  audio.addEventListener('loadedmetadata', () => { durEl.textContent = fmt(audio.duration); paint(); });
   audio.addEventListener('timeupdate', paint);
-  audio.addEventListener('ended', () => { playBtn.classList.remove('playing'); paint(); });
+  audio.addEventListener('ended', () => { playBtn.classList.remove('playing'); audio.currentTime = 0; paint(); });
 
-  wave.addEventListener('click', (e) => seekFromX(e.clientX));
-  wave.addEventListener('keydown', (e) => {
+  /* click + drag to scrub */
+  let dragging = false;
+  bar.addEventListener('pointerdown', (e) => { dragging = true; bar.setPointerCapture(e.pointerId); seekFromX(e.clientX); });
+  bar.addEventListener('pointermove', (e) => { if (dragging) seekFromX(e.clientX); });
+  bar.addEventListener('pointerup',   () => { dragging = false; });
+  bar.addEventListener('keydown', (e) => {
     if (!audio.duration) return;
     if (e.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
     else if (e.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
@@ -70,9 +62,7 @@
     paint();
   });
 
-  let rt;
-  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(buildWave, 200); });
-  buildWave();
+  paint();
 })();
 
 /* ---------- Artist modal (ARTIST) ---------- */
