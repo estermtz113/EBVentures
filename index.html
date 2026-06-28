@@ -6,7 +6,7 @@
   <title>Zeta Music Label</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@700;800&family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -54,36 +54,36 @@
 
   <main class="wrap">
 
-    <!-- NOW PLAYING -->
-    <section class="player-section">
-      <p class="eyebrow">Now playing</p>
-      <h2 class="section-title">Latest release</h2>
-      <p class="section-sub">Press play to hear the newest track from the Zeta roster.</p>
+    <!-- NOW PLAYING (Drumcode-style) -->
+    <section class="listen">
+      <div class="listen-frame">
 
-      <div class="player">
-        <div class="player-cover">
-          <img src="assets/album-cover.svg" alt="Album cover" />
+        <div class="listen-head">
+          <h2 class="listen-title">Hit play</h2>
         </div>
-        <div class="player-meta">
-          <p class="player-label">Single</p>
-          <h3 class="player-song">Midnight Frequency</h3>
-          <p class="player-artist">Waleed DJ</p>
-          <div class="player-controls">
-            <button class="play-btn" id="play-btn" aria-label="Play or pause">
-              <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-            </button>
-            <div class="progress-area">
-              <span class="time" id="time-current">0:00</span>
-              <div class="progress" id="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-              <span class="time" id="time-duration">0:00</span>
-            </div>
+
+        <div class="listen-main">
+          <div class="listen-cover">
+            <img src="assets/album-cover.svg" alt="Album cover" />
           </div>
-        </div>
-      </div>
 
-      <!-- Drop your file at audio/track.mp3 (or change the src below) -->
-      <audio id="zeta-audio" src="audio/track.mp3" preload="metadata"></audio>
+          <div class="listen-song">
+            <p class="meta-label">Song</p>
+            <p class="song-name">Midnight Frequency</p>
+            <p class="song-artist">Waleed DJ</p>
+          </div>
+
+          <button class="listen-play" id="play-btn" aria-label="Play or pause">
+            <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          </button>
+        </div>
+
+        <div class="listen-wave" id="wave" role="slider" aria-label="Seek" tabindex="0"></div>
+
+        <!-- Drop your file at audio/track.mp3 (or change the src below) -->
+        <audio id="zeta-audio" src="audio/track.mp3" preload="metadata"></audio>
+      </div>
     </section>
 
   </main>

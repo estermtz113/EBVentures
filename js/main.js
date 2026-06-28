@@ -2,52 +2,77 @@
    ZETA MUSIC LABEL — scripts
    ============================================================ */
 
-/* ---------- Custom audio player (HOME) ---------- */
+/* ---------- Waveform audio player (HOME) ---------- */
 (function () {
-  const audio    = document.getElementById('zeta-audio');
+  const audio = document.getElementById('zeta-audio');
   if (!audio) return;
 
-  const playBtn  = document.getElementById('play-btn');
-  const cover    = document.querySelector('.player-cover');
-  const fill     = document.getElementById('progress-fill');
-  const bar      = document.getElementById('progress-bar');
-  const curEl    = document.getElementById('time-current');
-  const durEl    = document.getElementById('time-duration');
+  const playBtn = document.getElementById('play-btn');
+  const wave    = document.getElementById('wave');
 
-  const fmt = (s) => {
-    if (isNaN(s)) return '0:00';
-    const m = Math.floor(s / 60);
-    const sec = Math.floor(s % 60).toString().padStart(2, '0');
-    return `${m}:${sec}`;
-  };
+  /* Build a deterministic pseudo-waveform.
+     Swap this for real audio analysis later if you want exact bars. */
+  let bars = [];
+  function buildWave() {
+    wave.innerHTML = '';
+    bars = [];
+    const count = Math.max(40, Math.min(120, Math.floor(wave.clientWidth / 7)));
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement('span');
+      b.className = 'bar';
+      // layered sines + a little jitter give a lively, music-like shape
+      const base =
+        0.5 +
+        0.32 * Math.sin(i * 0.45) +
+        0.18 * Math.sin(i * 1.7 + 1) +
+        0.12 * Math.sin(i * 0.13);
+      const jitter = ((Math.sin(i * 12.9898) * 43758.5453) % 1 + 1) % 1;
+      let h = Math.abs(base) * 0.7 + jitter * 0.3;
+      h = Math.max(0.12, Math.min(1, h));
+      b.style.height = (h * 100) + '%';
+      wave.appendChild(b);
+      bars.push(b);
+    }
+    paint();
+  }
+
+  function paint() {
+    const frac = audio.duration ? audio.currentTime / audio.duration : 0;
+    const cut = Math.round(frac * bars.length);
+    bars.forEach((b, i) => b.classList.toggle('on', i < cut));
+  }
+
+  function seekFromX(clientX) {
+    if (!audio.duration) return;
+    const rect = wave.getBoundingClientRect();
+    const frac = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+    audio.currentTime = frac * audio.duration;
+    paint();
+  }
 
   playBtn.addEventListener('click', () => {
-    if (audio.paused) audio.play().catch(() => {/* no source yet */});
+    if (audio.paused) audio.play().catch(() => {/* no file at audio/track.mp3 yet */});
     else audio.pause();
   });
 
-  audio.addEventListener('play', () => {
-    playBtn.classList.add('playing');
-    cover.classList.add('is-playing');
-  });
-  audio.addEventListener('pause', () => {
-    playBtn.classList.remove('playing');
-    cover.classList.remove('is-playing');
-  });
+  audio.addEventListener('play',  () => playBtn.classList.add('playing'));
+  audio.addEventListener('pause', () => playBtn.classList.remove('playing'));
+  audio.addEventListener('timeupdate', paint);
+  audio.addEventListener('ended', () => { playBtn.classList.remove('playing'); paint(); });
 
-  audio.addEventListener('loadedmetadata', () => { durEl.textContent = fmt(audio.duration); });
-  audio.addEventListener('timeupdate', () => {
-    const pct = (audio.currentTime / audio.duration) * 100 || 0;
-    fill.style.width = pct + '%';
-    curEl.textContent = fmt(audio.currentTime);
-  });
-  audio.addEventListener('ended', () => { fill.style.width = '0%'; curEl.textContent = '0:00'; });
-
-  bar.addEventListener('click', (e) => {
+  wave.addEventListener('click', (e) => seekFromX(e.clientX));
+  wave.addEventListener('keydown', (e) => {
     if (!audio.duration) return;
-    const rect = bar.getBoundingClientRect();
-    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+    if (e.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+    else if (e.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
+    else return;
+    e.preventDefault();
+    paint();
   });
+
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(buildWave, 200); });
+  buildWave();
 })();
 
 /* ---------- Artist modal (ARTIST) ---------- */
