@@ -12,6 +12,6 @@
     <circle cx="300" cy="300" r="190"/>
     <circle cx="300" cy="300" r="130"/>
   </g>
-  <text x="300" y="370" font-family="'Syne', sans-serif" font-size="260" font-weight="800"
+  <text x="300" y="370" font-family="'Archivo', sans-serif" font-size="260" font-weight="800"
         text-anchor="middle" fill="#ffffff" fill-opacity="0.92">&#950;</text>
 </svg>

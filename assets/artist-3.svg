@@ -6,8 +6,8 @@
     </linearGradient>
   </defs>
   <rect width="500" height="600" fill="url(#g3)"/>
-  <text x="250" y="300" font-family="'Syne', sans-serif" font-size="180" font-weight="800"
+  <text x="250" y="300" font-family="'Archivo', sans-serif" font-size="180" font-weight="800"
         text-anchor="middle" fill="#ffffff" fill-opacity="0.16">&#950;</text>
-  <text x="250" y="420" font-family="'Syne', sans-serif" font-size="120" font-weight="800"
+  <text x="250" y="420" font-family="'Archivo', sans-serif" font-size="120" font-weight="800"
         text-anchor="middle" fill="#ffffff" fill-opacity="0.92">S</text>
 </svg>
