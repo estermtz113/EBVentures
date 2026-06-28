@@ -1,10 +1,10 @@
-# Zeta Music Label — website
+# Xeta Music Label — website
 
 Static site: **Home, Videos, Artist, Contact Us**. Just open `index.html` in a browser, or
 upload the whole folder to any host (Netlify, GitHub Pages, Vercel, cPanel...).
 
 ```
-zeta-music/
+Xeta-music/
 ├── index.html      Home — banner + music player
 ├── videos.html     6 YouTube videos
 ├── artist.html     Artist cards + bio pop-up
@@ -62,7 +62,7 @@ fetch(url).then(r => r.json()).then(data => {
       <div class="video-embed">
         <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe>
       </div>
-      <div class="video-info"><h3>${title}</h3><p>Zeta Music Label</p></div>
+      <div class="video-info"><h3>${title}</h3><p>Xeta Music Label</p></div>
     </article>`;
   }).join('');
 });
@@ -86,6 +86,6 @@ Until you do that, the form shows a "not configured yet" message instead of fail
 The JS submits in the background so the page doesn't reload, and shows a success/error line.
 
 **No-signup fallback:** change the form to a simple `mailto:` — set
-`action="mailto:hello@zetamusic.com" method="POST"`. This opens the visitor's email app instead
+`action="mailto:hello@Xetamusic.com" method="POST"`. This opens the visitor's email app instead
 of sending from the site (clunkier, but zero setup).
 ```
