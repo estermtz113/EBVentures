@@ -1,0 +1,11 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="navg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#7c5cff"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="36" height="36" rx="10" fill="url(#navg)"/>
+  <text x="20" y="29" font-family="'Syne', sans-serif" font-size="26" font-weight="800"
+        text-anchor="middle" fill="#15151a">&#950;</text>
+</svg>

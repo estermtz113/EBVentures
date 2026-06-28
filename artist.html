@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Artists — Zeta Music Label</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Manrope:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo-mark.svg" alt="Zeta logo" />
+        <span class="brand-name">ZETA</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden />
+      <label class="nav-burger" for="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></label>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="videos.html">Videos</a></li>
+        <li><a href="artist.html" class="active">Artist</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="page-head">
+      <p class="eyebrow">Roster</p>
+      <h1 class="section-title">The artists</h1>
+      <p class="section-sub">Tap any artist to read their story.</p>
+    </section>
+
+    <section class="artist-grid">
+
+      <button class="artist-card" data-artist
+              data-name="Waleed DJ"
+              data-role="Founder &middot; Producer"
+              data-bio="Waleed DJ is the founder and flagship artist of Zeta Music Label. Blending deep house grooves with cinematic electronic textures, he has spent the last decade building dancefloors from underground clubs to festival main stages. His sound is defined by warm analog basslines and a relentless ear for melody.">
+        <img src="assets/artist-waleed.svg" alt="Waleed DJ" />
+        <div class="artist-card-overlay">
+          <h3>Waleed DJ</h3>
+          <p class="role">Founder &middot; Producer</p>
+          <span class="more">About me</span>
+        </div>
+      </button>
+
+      <button class="artist-card" data-artist
+              data-name="Nova Reign"
+              data-role="Vocalist &middot; Songwriter"
+              data-bio="Nova Reign brings a soulful voice and sharp songwriting to the Zeta family. Drawing from R&B and future-pop, her topline work has shaped some of the label's most-streamed singles. Off the mic, she writes for artists across the electronic scene.">
+        <img src="assets/artist-2.svg" alt="Nova Reign" />
+        <div class="artist-card-overlay">
+          <h3>Nova Reign</h3>
+          <p class="role">Vocalist &middot; Songwriter</p>
+          <span class="more">About me</span>
+        </div>
+      </button>
+
+      <button class="artist-card" data-artist
+              data-name="Sable"
+              data-role="DJ &middot; Live Performer"
+              data-bio="Sable is a rising selector known for hypnotic, genre-fluid sets that move from melodic techno to broken beat without losing the room. A Zeta resident since 2024, Sable closes the label's showcase nights and curates its monthly mix series.">
+        <img src="assets/artist-3.svg" alt="Sable" />
+        <div class="artist-card-overlay">
+          <h3>Sable</h3>
+          <p class="role">DJ &middot; Live Performer</p>
+          <span class="more">About me</span>
+        </div>
+      </button>
+
+    </section>
+  </main>
+
+  <!-- ARTIST MODAL -->
+  <div class="modal" id="artist-modal" role="dialog" aria-modal="true" aria-label="Artist bio">
+    <div class="modal-card">
+      <img src="" alt="" />
+      <div class="modal-body">
+        <button class="modal-close" aria-label="Close">&times;</button>
+        <p class="role"></p>
+        <h3></h3>
+        <p></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="footer-brand">ZETA MUSIC LABEL</span>
+      <span>&copy; 2026 Zeta Music Label. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
