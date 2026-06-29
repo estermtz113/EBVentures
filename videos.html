@@ -35,62 +35,26 @@
       <p class="section-sub">The six latest drops from the Xeta channel. Replace the video IDs below with your own.</p>
     </section>
 
-    <!-- VIDEO GRID — replace VIDEO_ID_n with real YouTube IDs -->
-    <section class="video-grid" id="video-grid">
+    ```html
+<script>
+const API_KEY = 'AIzaSyAd_rF15hF7Em-x9Jctn0BlI1FO6LK8T5c';
+const UPLOADS = 'UU0CqEw42SWBKOrhz3zh_h6Q'; // starts with UU...
+const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=6&playlistId=${UPLOADS}&key=${API_KEY}`;
 
-      <article class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Xeta video 1"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info"><h3>Track Title One</h3><p>Waleed DJ &middot; Official Video</p></div>
-      </article>
-
-      <article class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Xeta video 2"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info"><h3>Track Title Two</h3><p>Waleed DJ &middot; Live Set</p></div>
-      </article>
-
-      <article class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Xeta video 3"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info"><h3>Track Title Three</h3><p>Xeta &middot; Lyric Video</p></div>
-      </article>
-
-      <article class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID_4" title="Xeta video 4"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info"><h3>Track Title Four</h3><p>Waleed DJ &middot; Remix</p></div>
-      </article>
-
-      <article class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID_5" title="Xeta video 5"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info"><h3>Track Title Five</h3><p>Xeta &middot; Behind the Scenes</p></div>
-      </article>
-
-      <article class="video-card">
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID_6" title="Xeta video 6"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
-        </div>
-        <div class="video-info"><h3>Track Title Six</h3><p>Waleed DJ &middot; Official Video</p></div>
-      </article>
+fetch(url).then(r => r.json()).then(data => {
+  document.getElementById('video-grid').innerHTML = data.items.map(item => {
+    const id = item.snippet.resourceId.videoId;
+    const title = item.snippet.title;
+    return `<article class="video-card">
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/${id}" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="video-info"><h3>${title}</h3><p>Xeta Music Label</p></div>
+    </article>`;
+  }).join('');
+});
+</script>
+```
 
     </section>
   </main>
