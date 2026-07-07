@@ -4,184 +4,98 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Videos — Xeta Music Label</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-
 <body>
 
-<header class="nav">
-  <div class="wrap nav-inner">
-
-    <a class="brand" href="index.html">
-      <img src="assets/logo-mark.svg" alt="Xeta logo" />
-      <span class="brand-name">Xeta</span>
-    </a>
-
-    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden />
-
-    <label class="nav-burger" for="nav-toggle" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="videos.html" class="active">Videos</a></li>
-      <li><a href="artist.html">Artist</a></li>
-      <li><a href="contact.html">Contact Us</a></li>
-    </ul>
-
-  </div>
-</header>
-
-
-<main class="wrap">
-
-  <section class="page-head">
-    <p class="eyebrow">Watch</p>
-
-    <h1 class="section-title">
-      Top Videos
-    </h1>
-
-    <p class="section-sub">
-      The six latest drops from the Xeta channel.
-    </p>
-  </section>
-
-
-  <section>
-    <div id="video-grid" class="video-grid">
-      <p>Loading videos...</p>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html">
+        <img src="assets/logo-mark.svg" alt="Xeta logo" />
+        <span class="brand-name">XETA</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden />
+      <label class="nav-burger" for="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></label>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="releases.html">Releases</a></li>
+        <li><a href="artist.html">Artist</a></li>
+        <li><a href="videos.html" class="active">Videos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </div>
-  </section>
+  </header>
 
+  <main class="wrap">
+    <section class="page-head">
+      <p class="eyebrow">Watch</p>
+      <h1 class="section-title">Top videos</h1>
+      <p class="section-sub">The six latest drops from the Xeta channel.</p>
+    </section>
 
-</main>
+    <section>
+      <div id="video-grid" class="video-grid">
+        <p>Loading videos&hellip;</p>
+      </div>
+    </section>
+  </main>
 
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="footer-brand">XETA MUSIC LABEL</span>
+      <span>&copy; 2026 Xeta Music Label. All rights reserved.</span>
+    </div>
+  </footer>
 
-<footer class="footer">
+  <!-- Auto-loads the 6 newest uploads from the channel via its public RSS feed
+       (rss2json converts it to JSON). Replace CHANNEL_ID with your own. -->
+  <script>
+    const CHANNEL_ID = "UC0CqEw42SWBKOrhz3zh_h6Q";
+    const rssFeed =
+      `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+        `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`
+      )}`;
 
-  <div class="wrap footer-inner">
-
-    <span class="footer-brand">
-      XETA MUSIC LABEL
-    </span>
-
-    <span>
-      &copy; 2026 Xeta Music Label. All rights reserved.
-    </span>
-
-  </div>
-
-</footer>
-
-
-<script>
-
-const CHANNEL_ID = "UC0CqEw42SWBKOrhz3zh_h6Q";
-
-const rssFeed =
-  `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-    `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`
-  )}`;
-
-
-async function loadVideos() {
-
-  const grid = document.getElementById("video-grid");
-
-  try {
-
-    const response = await fetch(rssFeed);
-
-    const data = await response.json();
-
-
-    if (!data.items || data.items.length === 0) {
-
-      grid.innerHTML =
-        "<p>No videos found.</p>";
-
-      return;
-
+    async function loadVideos() {
+      const grid = document.getElementById("video-grid");
+      try {
+        const response = await fetch(rssFeed);
+        const data = await response.json();
+        if (!data.items || data.items.length === 0) {
+          grid.innerHTML = "<p>No videos found.</p>";
+          return;
+        }
+        grid.innerHTML = data.items
+          .slice(0, 6)
+          .map(video => {
+            const videoId = video.link.split("v=")[1];
+            return `
+              <article class="video-card">
+                <div class="video-embed">
+                  <iframe
+                    src="https://www.youtube.com/embed/${videoId}"
+                    title="${video.title}"
+                    loading="lazy"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+                <div class="video-info">
+                  <h3>${video.title}</h3>
+                  <p>Xeta Music Label</p>
+                </div>
+              </article>`;
+          })
+          .join("");
+      } catch (error) {
+        console.error("Error loading YouTube videos:", error);
+        grid.innerHTML = "<p>Unable to load videos right now.</p>";
+      }
     }
-
-
-    grid.innerHTML = data.items
-      .slice(0, 6)
-      .map(video => {
-
-        const videoId =
-          video.link.split("v=")[1];
-
-
-        return `
-
-        <article class="video-card">
-
-          <div class="video-embed">
-
-            <iframe
-              src="https://www.youtube.com/embed/${videoId}"
-              title="${video.title}"
-              loading="lazy"
-              allowfullscreen>
-            </iframe>
-
-          </div>
-
-
-          <div class="video-info">
-
-            <h3>
-              ${video.title}
-            </h3>
-
-            <p>
-              Xeta Music Label
-            </p>
-
-          </div>
-
-        </article>
-
-        `;
-
-      })
-      .join("");
-
-  }
-
-
-  catch (error) {
-
-    console.error(
-      "Error loading YouTube videos:",
-      error
-    );
-
-
-    grid.innerHTML =
-      "<p>Unable to load videos right now.</p>";
-
-  }
-
-}
-
-
-loadVideos();
-
-</script>
-
-
-<script src="js/main.js"></script>
-
+    loadVideos();
+  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>

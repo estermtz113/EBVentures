@@ -1,10 +1,10 @@
 /* ============================================================
-   ZETA MUSIC LABEL — scripts
+   XETA MUSIC LABEL — scripts
    ============================================================ */
 
 /* ---------- Modern audio player (HOME) ---------- */
 (function () {
-  const audio = document.getElementById('zeta-audio');
+  const audio = document.getElementById('xeta-audio');
   if (!audio) return;
 
   const playBtn = document.getElementById('play-btn');
@@ -13,6 +13,9 @@
   const knob    = document.getElementById('progress-knob');
   const curEl   = document.getElementById('time-current');
   const durEl   = document.getElementById('time-duration');
+  const titleEl  = document.querySelector('.np-title');
+  const artistEl = document.querySelector('.np-artist');
+  const tracks   = document.querySelectorAll('.np-track');
 
   const fmt = (s) => {
     if (!isFinite(s)) return '0:00';
@@ -60,6 +63,23 @@
     else return;
     e.preventDefault();
     paint();
+  });
+
+  /* tracklist: click a row to load it into the player */
+  tracks.forEach((row) => {
+    row.addEventListener('click', () => {
+      audio.src = row.dataset.src;
+      if (titleEl)  titleEl.textContent  = row.dataset.title;
+      if (artistEl) artistEl.textContent = row.dataset.artist;
+      tracks.forEach((t) => t.classList.remove('active'));
+      row.classList.add('active');
+      fill.style.width = '0%';
+      knob.style.left = '0%';
+      curEl.textContent = '0:00';
+      durEl.textContent = '0:00';
+      audio.load();
+      audio.play().catch(() => {/* file not added yet */});
+    });
   });
 
   paint();

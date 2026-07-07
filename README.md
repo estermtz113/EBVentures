@@ -4,7 +4,7 @@ Static site: **Home, Videos, Artist, Contact Us**. Just open `index.html` in a b
 upload the whole folder to any host (Netlify, GitHub Pages, Vercel, cPanel...).
 
 ```
-Xeta-music/
+xeta-music/
 ├── index.html      Home — banner + music player
 ├── videos.html     6 YouTube videos
 ├── artist.html     Artist cards + bio pop-up
@@ -50,8 +50,8 @@ YouTube ID (the part after `watch?v=`). Zero setup, but you update it by hand.
 
 ```html
 <script>
-const API_KEY = '';
-const UPLOADS = ''; // starts with UU...
+const API_KEY = 'YOUR_API_KEY';
+const UPLOADS = 'YOUR_UPLOADS_PLAYLIST_ID'; // starts with UU...
 const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=6&playlistId=${UPLOADS}&key=${API_KEY}`;
 
 fetch(url).then(r => r.json()).then(data => {
@@ -86,6 +86,6 @@ Until you do that, the form shows a "not configured yet" message instead of fail
 The JS submits in the background so the page doesn't reload, and shows a success/error line.
 
 **No-signup fallback:** change the form to a simple `mailto:` — set
-`action="mailto:hello@Xetamusic.com" method="POST"`. This opens the visitor's email app instead
+`action="mailto:hello@xetamusic.com" method="POST"`. This opens the visitor's email app instead
 of sending from the site (clunkier, but zero setup).
 ```

@@ -1,2 +1,6 @@
-Put your music file here and name it: track.mp3
-(or change the <audio src="..."> path in index.html)
+Put your music files here:
+  track.mp3    -> featured track (Midnight Frequency)
+  track-2.mp3  -> Neon District
+  track-3.mp3  -> Afterhours
+  track-4.mp3  -> Concrete Bloom
+Or change the src / data-src paths in index.html.
