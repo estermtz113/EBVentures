@@ -50,8 +50,8 @@ YouTube ID (the part after `watch?v=`). Zero setup, but you update it by hand.
 
 ```html
 <script>
-const API_KEY = 'AIzaSyAd_rF15hF7Em-x9Jctn0BlI1FO6LK8T5c';
-const UPLOADS = 'UU0CqEw42SWBKOrhz3zh_h6Q'; // starts with UU...
+const API_KEY = '';
+const UPLOADS = ''; // starts with UU...
 const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=6&playlistId=${UPLOADS}&key=${API_KEY}`;
 
 fetch(url).then(r => r.json()).then(data => {
